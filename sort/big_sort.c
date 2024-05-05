@@ -6,151 +6,216 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 22:28:44 by akajjou           #+#    #+#             */
-/*   Updated: 2024/05/03 19:39:03 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/05/05 01:30:58 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../push_swap.h"
+#include "../push_swap.h"
 
-int     biggest(t_list *stack_b)
+int	biggest(t_list *stack_b)
 {
-    t_list *temp = stack_b;
-    int big = 0;
+	t_list	*temp;
+	int		big;
 
-    while (temp != NULL)
-    {
-        if (temp->content > big)
-            big = temp->content;
-        temp = temp->next;
-    }
-    return (big);
+	temp = stack_b;
+	big = 0;
+	while (temp != NULL)
+	{
+		if (temp->content > big)
+			big = temp->content;
+		temp = temp->next;
+	}
+	return (big);
 }
-int  biggest_index(t_list *stack_b)
+int	biggest_index(t_list *stack_b)
 {
-    t_list *temp = stack_b;
-    int big = 0;
+	t_list	*temp;
+	int		big;
+	int		index;
+	int		i;
+
+	temp = stack_b;
+	big = 0;
+	index = 0;
+	i = 0;
+	while (temp != NULL)
+	{
+		if (temp->content > big)
+		{
+			big = temp->content;
+			index = i;
+		}
+		temp = temp->next;
+		i++;
+	}
+	return (index);
+}
+
+int 	ft_get_rank(t_list *stack_a, int value)
+{
+	t_list	*temp;
+	int		rank;
+	int		i;
+
+	temp = stack_a;
+	rank = 0;
+	i = 0;
+	while (temp != NULL)
+	{
+		if (temp->rank == value)
+		{
+			rank = i;
+			break ;
+		}
+		temp = temp->next;
+		i++;
+	}
+	return (rank);
+}
+
+void 	stack_b_rotater(t_list **stack_b)
+{
+	t_list	*temp = *stack_b;
+	if (temp->rank <= ft_lstsize(*stack_b))
+		ft_rb(stack_b);
+}
+
+void 	ft_b_push(t_list **stack_b, t_list **stack_a, int index)
+{
+	t_list	*temp_a;
+	t_list	*temp_b;
+	int		i;
+
+	temp_a = *stack_a;
+	temp_b = *stack_b;
+	if (index <= ft_lstsize(*stack_a) / 2)
+	{
+		while (index > 0)
+		{
+			ft_ra(stack_a);
+			index--;
+		}
+	}
+	else
+	{
+		index = ft_lstsize(*stack_a) - index;
+		while (index != 0)
+		{
+			ft_rra(stack_a);
+			index--;
+		}
+	}
+	ft_pb(stack_a, stack_b);
+	stack_b_rotater(stack_b);
+}
+
+void	stack_b_pusher(t_list **stack_a, t_list **stack_b, int range)
+{
+	t_list	*temp_b;
+	t_list	*temp_a;
+	int		i;
+	int	index;
+
+	temp_a = *stack_a;
+	while (ft_lstsize(*stack_a) != 0)
+	{
+		if (temp_a->rank <= range)
+		{
+			index = ft_get_rank(*stack_a, temp_a->rank);
+			ft_b_push(stack_b, stack_a,index);
+			range++;
+		}
+			temp_a = temp_a->next;
+			if (temp_a == NULL)
+				temp_a = *stack_a;
+		
+	}
+}
+int 		index_returner(t_list *stack_b)
+{
+	int max_value = stack_b->content;
     int index = 0;
-    int i = 0;
+    int max_index = 0;
+    t_list *current = stack_b->next;
 
-    while (temp != NULL)
+    while (current != NULL)
     {
-        if (temp->content > big)
+        index++;
+        if (current->content > max_value)
         {
-            big = temp->content;
-            index = i;
+            max_value = current->content;
+            max_index = index;
         }
-        temp = temp->next;
-        i++;
+        current = current->next;
     }
-    return (index);
-}
-void    ft_pusher_tt(t_list **stack_a, t_list **stack_b,int i)
-{
-    if (i <= ft_lstsize(*stack_a))
-    {
-        while (i != 0)
-        {
-            ft_ra(stack_a);
-            i--;
-        }
-    }
-    else
-    {   
-        while (i != 0)
-        {
-            ft_rra(stack_a);
-            i--;
-        }
-    }
-    ft_pb(stack_a,stack_b);
-    t_list *temp_b = *stack_b;
-    if (temp_b->rank <= ft_lstsize(*stack_b))
-        ft_rb(stack_b);
-}
-void    stackb_pusher(t_list **stack_a, t_list **stack_b, int range)
-{
-    t_list *temp_b = *stack_b;
-    t_list *temp_a = *stack_a; 
-    int i = 0;
-
-    while (ft_lstsize(*stack_a) != 0)
-    {
-        if (temp_a->rank <= range)
-        {
-            if (i == 0)
-                ft_pb(stack_a,stack_b);
-            else
-                {
-                    if (i <= ft_lstsize(*stack_a))
-                    {
-                        while (i != 0)
-                        {
-                            ft_ra(stack_a);
-                            i--;
-                        }
-                    }
-                    else
-                    {   
-                        while (i != 0)
-                        {
-                            ft_rra(stack_a);
-                            i--;
-                        }
-                    }
-                    ft_pb(stack_a,stack_b);
-                    temp_a = *stack_a;
-                    i = 0;
-                }
-        }
-        else
-        {
-            temp_a = temp_a->next;
-            i++;
-        }
-        
-    }
-    
-}
-void    stacka_pusher(t_list **stack_a, t_list **stack_b)
-{
-    t_list *temp_a = *stack_a;
-    t_list *temp_b = *stack_b;
-    int d = biggest_index(*stack_b);
-    int i = 0;
-    
-    while (temp_b != NULL)
-    {
-        while (temp_b->rank != d && temp_b != NULL)
-        {
-            temp_b = temp_b->next;
-            i++;
-        }
-        temp_b = *stack_b;
-        while (i != 0)
-        {
-            ft_rrb(stack_b);
-            i--;
-        }
-        ft_pa(stack_a,stack_b);
-    }
-
-
-
-    
+    return max_index;
 }
 
-void    big_sort(t_list **stack_a, t_list **stack_b, int size)
+void  	ft_a_push(t_list **stack_a, t_list **stack_b, int index)
 {
-    int range;
-    t_list *temp_a = *stack_a;
-    t_list *temp_b = *stack_b;
-    int i = 0;
-  
- 
-    if (ft_lstsize(*stack_a)  <= 100)
-        range = 15;
-    else
-        range = 30;
-    stackb_pusher(stack_a,stack_b,range);
-    // stacka_pusher(stack_a,stack_b); 
+	t_list	*temp_a;
+	t_list	*temp_b;
+	int		i;
+
+	temp_a = *stack_a;
+	temp_b = *stack_b;
+	if (index <= ft_lstsize(*stack_b) / 2)
+	{
+		while (index > 0)
+		{
+			ft_rb(stack_b);
+			index--;
+		}
+	}
+	else
+	{
+		index = ft_lstsize(*stack_b) - index;
+		while (index != 0)
+		{
+			ft_rrb(stack_b);
+			index--;
+		}
+	}
+	ft_pa(stack_a, stack_b);
+}
+
+void	stack_a_pusher(t_list **stack_a, t_list **stack_b)
+{
+	t_list	*temp_a;
+	t_list	*temp_b;
+	int		index;
+	int		i;
+
+	temp_a = *stack_a;
+	temp_b = *stack_b;
+	while (ft_lstsize(*stack_b) != 0)
+	{
+		index = index_returner(*stack_b);
+		ft_a_push(stack_a, stack_b, index);
+		
+			
+	}
+	
+}
+
+void	big_sort(t_list **stack_a, t_list **stack_b, int size)
+{
+	int		range;
+	t_list	*temp_a;
+	t_list	*temp_b;
+	int		i;
+
+	temp_a = *stack_a;
+	temp_b = *stack_b;
+	i = 0;
+	if (ft_lstsize(*stack_a) <= 100)
+		range = 15;
+	else
+		range = 30;
+	stack_b_pusher(stack_a, stack_b, range);
+
+
+	
+	stack_a_pusher(stack_a,stack_b);
+	
 }
