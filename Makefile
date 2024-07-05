@@ -1,32 +1,50 @@
-NAME = push_swap
-
-SRCS =  $(wildcard *.c ope/*.c sort/*.c)
-
-OBJS = ${SRCS:.c=.o}
-CHECK_OBJS = ${CHECK_SRCS:.c=.o}
-
+# Compiler
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iincludes
 
-RM = rm -rf
+# Compiler flags
+CFLAGS = -W
 
-all: ${NAME} ${CHECK}
-${NAME}: ${OBJS}
-	@${MAKE} -C ./libft
-	@${CC} ${CFLAGS} ${OBJS} ./libft/libft.a -o ${NAME}
+# Source files
+SRC_DIR = .
+SRC_FILES = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/ope/*.c) $(wildcard $(SRC_DIR)/sort/*.c)
 
-${CHECK}: ${CHECK_OBJS} 
-	@${CC} ${CFLAGS} ${CHECK_OBJS} ./libft/libft.a -o ${CHECK}
+# Object files
+OBJ_FILES = $(SRC_FILES:.c=.o)
 
-clean: 
-	@${MAKE} -C ./libft fclean
-	@${RM} ${OBJS}
-	@${RM} ${CHECK_OBJS}
+# Output file
+OUT_FILE = push_swap
 
+# Libraries (if any)
+LIBFT_DIR = ./LIBFT
+LIBFT = $(LIBFT_DIR)/libft.a
+
+# Default rule
+all: $(LIBFT) $(OUT_FILE)
+
+# Rule to create the output file
+$(OUT_FILE): $(OBJ_FILES)
+	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -o $(OUT_FILE)
+
+# Rule to create object files
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Rule to build libft
+$(LIBFT):
+	make -C $(LIBFT_DIR)
+
+# Clean rule
+clean:
+	rm -f $(OBJ_FILES)
+	make -C $(LIBFT_DIR) clean
+
+# Fclean rule
 fclean: clean
-	@${RM} ${NAME}
-	@${RM} ${CHECK}
+	rm -f $(OUT_FILE)
+	make -C $(LIBFT_DIR) fclean
 
+# Re rule
 re: fclean all
 
+# Phony targets
 .PHONY: all clean fclean re
