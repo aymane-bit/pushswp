@@ -1,8 +1,8 @@
 # Compiler
-CC = gcc
+CC = cc
 
 # Compiler flags
-CFLAGS = -W
+CFLAGS = 
 
 # Source files
 SRC_DIR = .

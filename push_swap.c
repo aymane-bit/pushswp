@@ -6,7 +6,7 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 03:19:47 by akajjou           #+#    #+#             */
-/*   Updated: 2024/05/02 19:52:31 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/07 12:51:30 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,17 @@ int    is_sorted(char **argv)
     }
     return (1);
 }
+void    ft_stack_free(t_list *stack_a)
+{
+    t_list *temp;
+
+    while (stack_a != NULL)
+    {
+        temp = stack_a;
+        stack_a = stack_a->next;
+        free(temp);
+    }
+}
 
 void ft_sort_init(int argc, char **argv)
 {
@@ -57,6 +68,7 @@ void ft_sort_init(int argc, char **argv)
     // exit(0);
     stack_a = stack_creator(argv);
     ft_sort(stack_a,j,argv);
+    ft_stack_free(stack_a);
 }
 
 int main(int argc, char **argv)
@@ -80,4 +92,5 @@ int main(int argc, char **argv)
     }
     argv = ft_split(str, ' ');
     ft_sort_init(argc, argv);
+    
 }

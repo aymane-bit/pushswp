@@ -6,7 +6,7 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 18:59:47 by akajjou           #+#    #+#             */
-/*   Updated: 2024/05/05 01:28:12 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/07 12:48:27 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void    ft_sort(t_list *stack_a, int size, char **array)
         five_sort(&stack_a,&stack_b);
     if (size > 5)
         big_sort(&stack_a,&stack_b,size);
-    print_stack_a(stack_a);
-    ft_printf("\n____________________\n");
-    print_stack_b(stack_b);
+    // print_stack_a(stack_a);
+    // ft_printf("\n____________________\n");
+    // print_stack_b(stack_b);
 }
 

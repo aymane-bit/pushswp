@@ -6,7 +6,7 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 22:28:44 by akajjou           #+#    #+#             */
-/*   Updated: 2024/05/05 01:30:58 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/07 12:48:16 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void 	ft_b_push(t_list **stack_b, t_list **stack_a, int index)
 	temp_b = *stack_b;
 	if (index <= ft_lstsize(*stack_a) / 2)
 	{
-		while (index > 0)
+		while (index >= 0)
 		{
 			ft_ra(stack_a);
 			index--;
@@ -116,19 +116,26 @@ void	stack_b_pusher(t_list **stack_a, t_list **stack_b, int range)
 	int		i;
 	int	index;
 
+	i = 0;
 	temp_a = *stack_a;
 	while (ft_lstsize(*stack_a) != 0)
 	{
-		if (temp_a->rank <= range)
+		if (temp_a->rank <= range && temp_a->rank >= i)
 		{
-			index = ft_get_rank(*stack_a, temp_a->rank);
-			ft_b_push(stack_b, stack_a,index);
+			ft_pb(stack_a, stack_b);
+			i++;
 			range++;
 		}
-			temp_a = temp_a->next;
-			if (temp_a == NULL)
-				temp_a = *stack_a;
-		
+		else if (temp_a->rank <= range)
+		{
+			ft_pb(stack_a, stack_b);
+			ft_rb(stack_b);
+			i++;
+			range++;
+		}
+		else
+			ft_ra(stack_a);
+		temp_a = *stack_a;
 	}
 }
 int 		index_returner(t_list *stack_b)
@@ -201,21 +208,19 @@ void	stack_a_pusher(t_list **stack_a, t_list **stack_b)
 void	big_sort(t_list **stack_a, t_list **stack_b, int size)
 {
 	int		range;
+	int		i;
 	t_list	*temp_a;
 	t_list	*temp_b;
-	int		i;
 
 	temp_a = *stack_a;
 	temp_b = *stack_b;
 	i = 0;
-	if (ft_lstsize(*stack_a) <= 100)
+	if (ft_lstsize(*stack_a) <= 250)
 		range = 15;
 	else
 		range = 30;
 	stack_b_pusher(stack_a, stack_b, range);
-
-
-	
 	stack_a_pusher(stack_a,stack_b);
+	// print_stack_a(*stack_a);
 	
 }
