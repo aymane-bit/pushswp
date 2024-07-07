@@ -6,81 +6,105 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 09:47:00 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 12:37:45 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/07 20:01:28 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-
-
-t_list      *stack_creator(char **array)
+t_list	*stack_creator(char **array)
 {
-    t_list *stack_a = NULL;
-    t_list *current_node = NULL;
+	int		i;
+	t_list	*stack_a;
+	t_list	*current_node;
 
-    int i = 0;
-    while (array[i]) 
-    {
-        if (stack_a == NULL) 
-        {
-            stack_a = ft_lstnew(ft_atoi(array[i]));  // Create the first node and assign it to stack_a
-            current_node = stack_a;                 // Set current_node to the head of the list
-        } 
-        else 
-        {
-            current_node->next = ft_lstnew(ft_atoi(array[i])); // Append new node at the end
-            current_node = current_node->next;                 // Move current_node to the new node
-        }
-        i++;
-    }
-    return stack_a; 
+	stack_a = NULL;
+	current_node = NULL;
+	i = 0;
+	while (array[i])
+	{
+		if (stack_a == NULL)
+		{
+			stack_a = ft_lstnew(ft_atoi(array[i]));
+			current_node = stack_a;
+		}
+		else
+		{
+			current_node->next = ft_lstnew(ft_atoi(array[i]));
+			current_node = current_node->next;
+		}
+		i++;
+	}
+	return (stack_a);
 }
 
-int    ft_dup_detector(char **argv)
+int	ft_dup_detector(char **argv)
 {
-    int d;
-    int i;
+	int	d;
+	int	i;
 
-    d = 0;
-    while (argv[d])
-    {
-        i = d + 1;
-        while (argv[i])
-        {
-            if (ft_strcmp(argv[d],argv[i]) == 0)
-                ft_exit();
-        i++;
-        }
-    d++; 
-    }
-    return (d);
+	d = 0;
+	while (argv[d])
+	{
+		i = d + 1;
+		while (argv[i])
+		{
+			if (ft_strcmp(argv[d], argv[i]) == 0)
+				ft_exit(argv);
+			i++;
+		}
+		d++;
+	}
+	return (d);
 }
 
-void    ft_arg_checker(char **argv)
+void	ft_arg_checker(char **argv)
 {
-    int i;
-    int d;
+	int	i;
+	int	d;
 
-    d = 0;
-    i = 0;
-    while (argv[d])
-    {
-        i = 0;
-        if (argv[d][i] == '-' || argv[d][i] == '+')
-            i++;
-        while (argv[d][i])
-        {
-            if (ft_isdigit(argv[d][i]) == 0)
-                ft_exit();      
-        i++;   
-        }
-    d++;    
-    }
-    
+	d = 0;
+	i = 0;
+	while (argv[d])
+	{
+		i = 0;
+		if (argv[d][i] == '-' || argv[d][i] == '+')
+			i++;
+		while (argv[d][i])
+		{
+			if (ft_isdigit(argv[d][i]) == 0)
+				ft_exit(argv);
+			i++;
+		}
+		d++;
+	}
 }
-void    ft_exit()
+
+void	ft_exit(char **argv)
 {
-    ft_printf("Error\n");
-    exit (1);
+	ft_printf("Error\n");
+	ft_free_it((void **)argv);
+	exit(1);
+}
+
+int	ft_get_rank(t_list *stack_a, int value)
+{
+	t_list	*temp;
+	int		rank;
+	int		i;
+
+	temp = stack_a;
+	rank = 0;
+	i = 0;
+	while (temp != NULL)
+	{
+		if (temp->rank == value)
+		{
+			rank = i;
+			break ;
+		}
+		temp = temp->next;
+		i++;
+	}
+	return (rank);
 }

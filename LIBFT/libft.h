@@ -6,7 +6,7 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 14:23:55 by akajjou           #+#    #+#             */
-/*   Updated: 2024/05/02 16:54:26 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/07 19:08:35 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@
 
 typedef struct s_list
 {
-	int			content;
-	int 	   rank;
+	int				content;
+	int				rank;
 	struct s_list	*next;
 }					t_list;
 
-int	ft_strcmp(char const *s1, char const *s2);
+int					ft_strcmp(char const *s1, char const *s2);
 char				*get_next_line(int fd);
 int					ft_printf(const char *format, ...);
 int					ptr_len(uintptr_t num);
@@ -89,7 +89,7 @@ void				ft_putstr_fd(char *s, int fd);
 void				ft_putendl_fd(char *s, int fd);
 void				ft_putnbr_fd(int n, int fd);
 
-t_list				*ft_lstnew(int	content);
+t_list				*ft_lstnew(int content);
 
 void				ft_lstadd_front(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);
