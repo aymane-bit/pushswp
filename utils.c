@@ -6,7 +6,7 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 09:47:00 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 20:01:28 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/13 13:15:34 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	ft_dup_detector(char **argv)
 {
 	int	d;
 	int	i;
+	int	a;
+	int	b;
 
 	d = 0;
 	while (argv[d])
@@ -49,13 +51,44 @@ int	ft_dup_detector(char **argv)
 		i = d + 1;
 		while (argv[i])
 		{
-			if (ft_strcmp(argv[d], argv[i]) == 0)
-				ft_exit(argv);
+			a = ft_atoi(argv[d]);
+			b = ft_atoi(argv[i]);
+			if (a == b)
+				ft_exit(argv, 0);
 			i++;
 		}
 		d++;
 	}
 	return (d);
+}
+
+int	ft_atoi2(const char *str, char **argv)
+{
+	int		sign;
+	long	digits;
+	int		a;
+
+	sign = 1;
+	digits = 0;
+	a = 0;
+	while ((*str >= 9 && *str <= 13) || *str == ' ')
+		str++;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (*str == '0')
+		str++;
+	while (*str >= '0' && *str <= '9')
+	{
+		digits = digits * 10 + sign * (*str - 48);
+		str++;
+		a++;
+	}
+	ft_check_int_error1(digits, argv);
+	return (digits);
 }
 
 void	ft_arg_checker(char **argv)
@@ -68,23 +101,17 @@ void	ft_arg_checker(char **argv)
 	while (argv[d])
 	{
 		i = 0;
+		ft_atoi2(argv[d], argv);
 		if (argv[d][i] == '-' || argv[d][i] == '+')
 			i++;
 		while (argv[d][i])
 		{
 			if (ft_isdigit(argv[d][i]) == 0)
-				ft_exit(argv);
+				ft_exit(argv, 0);
 			i++;
 		}
 		d++;
 	}
-}
-
-void	ft_exit(char **argv)
-{
-	ft_printf("Error\n");
-	ft_free_it((void **)argv);
-	exit(1);
 }
 
 int	ft_get_rank(t_list *stack_a, int value)

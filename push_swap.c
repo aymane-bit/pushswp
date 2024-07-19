@@ -6,7 +6,7 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 03:19:47 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 20:09:34 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/14 21:42:07 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_free_it(void **array)
 		free(array[i]);
 		i++;
 	}
-	// free(array);
 }
 
 int	is_sorted(char **argv)
@@ -43,54 +42,58 @@ int	is_sorted(char **argv)
 	return (1);
 }
 
-void	ft_stack_free(t_list *stack_a)
+void	free_stack(t_list *stack)
 {
 	t_list	*temp;
-	
-	temp = stack_a;
-	while (temp)
+
+	while (stack != NULL)
 	{
+		temp = stack;
+		stack = stack->next;
 		free(temp);
-		temp = temp->next;
 	}
 }
 
-void	ft_sort_init(int argc, char **argv)
+void	ft_sort_init(int argc, char **argv, char *tmp)
 {
 	t_list	*stack_a;
 	int		j;
 
+	free(tmp);
 	stack_a = NULL;
 	ft_arg_checker(argv);
 	j = ft_dup_detector(argv);
 	if (is_sorted(argv) == 1)
-		ft_exit(argv);
+		ft_exit(argv, 1);
 	stack_a = stack_creator(argv);
 	ft_sort(stack_a, j, argv);
-	ft_stack_free(stack_a);
 }
 
 int	main(int argc, char **argv)
 {
 	int		i;
-	int		len;
-	char	*spc;
 	char	*str;
+	char	*tmp;
+	char	*temp_tmp;
 
-	str = argv[1];
-	spc = ft_strdup(" ");
-	i = 2;
-	if (argc < 2)
+	i = 1;
+	tmp = NULL;
+	if (check(argv, argc) == 0)
 		return (0);
-	str = ft_strjoin(str, spc);
 	while (argv[i])
 	{
-		str = ft_strjoin(str, argv[i]);
-		str = ft_strjoin(str, spc);
+		str = ft_strjoin(argv[i], " ");
+		if (tmp == NULL)
+			tmp = str;
+		else
+		{
+			temp_tmp = ft_strjoin(tmp, str);
+			free(tmp);
+			tmp = temp_tmp;
+			free(str);
+		}
 		i++;
 	}
-	free(spc);
-	argv = ft_split(str, ' ');
-	free(str);
-	ft_sort_init(argc, argv);
+	argv = ft_split(tmp, ' ');
+	ft_sort_init(argc, argv, tmp);
 }

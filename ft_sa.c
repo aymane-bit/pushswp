@@ -6,11 +6,11 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 18:43:56 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 17:32:54 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/14 21:43:31 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
 void	ft_sa(t_list **stack_a)
 {
@@ -51,4 +51,13 @@ void	ft_pa(t_list **stack_a, t_list **stack_b)
 	first->next = *stack_a;
 	*stack_a = first;
 	write(1, "pa\n", 3);
+}
+
+int	check(char **argv, int argc)
+{
+	if (argc < 2)
+		return (0);
+	if (spc_it(argv))
+		return (write(1, "Error\n", 7), 0);
+	return (1);
 }

@@ -6,11 +6,11 @@
 /*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 18:59:47 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 20:05:54 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/12 20:32:30 by akajjou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
 void	ft_boble_sort(int **arr)
 {
@@ -38,6 +38,19 @@ void	ft_boble_sort(int **arr)
 	}
 }
 
+void	free1_array(void **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+	{
+		free(array[i]);
+		i++;
+	}
+	free(array);
+}
+
 void	get_rank(t_list **stack_a, char **array)
 {
 	t_list	*temp;
@@ -59,8 +72,7 @@ void	get_rank(t_list **stack_a, char **array)
 		i = 0;
 		temp = temp->next;
 	}
-	ft_free_it((void **)array);
-	ft_free_it((void **)res);
+	free1_array((void **)res);
 }
 
 void	ft_sort(t_list *stack_a, int size, char **array)
@@ -79,4 +91,6 @@ void	ft_sort(t_list *stack_a, int size, char **array)
 		five_sort(&stack_a, &stack_b);
 	else if (size > 5)
 		big_sort(&stack_a, &stack_b, size);
+	free_stack(stack_a);
+	free1_array((void **)array);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   three_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aymane <aymane@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 14:08:26 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 18:59:19 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/11 21:54:52 by aymane           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
 void	three_sort(t_list **stack_a)
 {

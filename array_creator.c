@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array_creator.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aymane <aymane@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:10:10 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 20:11:45 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/11 22:18:22 by aymane           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ int	**char_to_int(char **input)
 		i++;
 	}
 	result[i] = NULL;
-	// ft_free_it((void **)input);
 	return (result);
 }

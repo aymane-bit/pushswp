@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_rra.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aymane <aymane@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 19:18:39 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 17:41:58 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/11 21:54:27 by aymane           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
 void	ft_rra(t_list **stack_a)
 {

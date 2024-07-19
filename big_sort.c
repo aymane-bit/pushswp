@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   big_sort.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akajjou <akajjou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: aymane <aymane@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 22:28:44 by akajjou           #+#    #+#             */
-/*   Updated: 2024/07/07 18:42:56 by akajjou          ###   ########.fr       */
+/*   Updated: 2024/07/12 16:33:52 by aymane           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../push_swap.h"
+#include "push_swap.h"
 
-void	stack_b_pusher(t_list **stack_a, t_list **stack_b, int range) // used
+void	stack_b_pusher(t_list **stack_a, t_list **stack_b, int range)
 {
 	int		i;
 	int		index;
@@ -41,7 +41,7 @@ void	stack_b_pusher(t_list **stack_a, t_list **stack_b, int range) // used
 	}
 }
 
-int	index_returner(t_list *stack_b) // used
+int	index_returner(t_list *stack_b)
 {
 	int		max_value;
 	int		index;
@@ -65,7 +65,7 @@ int	index_returner(t_list *stack_b) // used
 	return (max_index);
 }
 
-void	ft_a_push(t_list **stack_a, t_list **stack_b, int index) // used
+void	ft_a_push(t_list **stack_a, t_list **stack_b, int index)
 {
 	int		i;
 	t_list	*temp_a;
@@ -93,7 +93,7 @@ void	ft_a_push(t_list **stack_a, t_list **stack_b, int index) // used
 	ft_pa(stack_a, stack_b);
 }
 
-void	stack_a_pusher(t_list **stack_a, t_list **stack_b) // used
+void	stack_a_pusher(t_list **stack_a, t_list **stack_b)
 {
 	int		index;
 	int		i;
@@ -122,7 +122,7 @@ void	big_sort(t_list **stack_a, t_list **stack_b, int size)
 	if (ft_lstsize(*stack_a) <= 250)
 		range = 15;
 	else
-		range = 30;
+		range = 40;
 	stack_b_pusher(stack_a, stack_b, range);
 	stack_a_pusher(stack_a, stack_b);
 }

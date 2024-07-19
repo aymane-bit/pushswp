@@ -1,50 +1,47 @@
-# Compiler
+NAME = push_swap
+
+LIBFT_DIR = LIBFT
+
+LIBFT = libft.a
+
+LIBFT_OUTPUT = $(LIBFT_DIR)/$(LIBFT)
+
+FILES = array_creator.c \
+		big_sort.c \
+		five_sort.c \
+		four_sort.c \
+		ft_rra.c \
+		ft_sa.c \
+		utils2.c \
+		push_swap.c \
+		sort_start.c \
+		three_sort.c \
+		utils.c \
+
+OFILS = $(FILES:.c=.o)
+
 CC = cc
 
-# Compiler flags
-CFLAGS = 
+FLAGS = -Wall -Wextra -Werror
 
-# Source files
-SRC_DIR = .
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/ope/*.c) $(wildcard $(SRC_DIR)/sort/*.c)
+all: $(NAME)
 
-# Object files
-OBJ_FILES = $(SRC_FILES:.c=.o)
+$(NAME): $(OFILS) $(LIBFT)
+	$(CC) $(FLAGS) $(OFILS) $(LIBFT) -o $(NAME)
 
-# Output file
-OUT_FILE = push_swap
-
-# Libraries (if any)
-LIBFT_DIR = ./LIBFT
-LIBFT = $(LIBFT_DIR)/libft.a
-
-# Default rule
-all: $(LIBFT) $(OUT_FILE)
-
-# Rule to create the output file
-$(OUT_FILE): $(OBJ_FILES)
-	$(CC) $(CFLAGS) $(OBJ_FILES) $(LIBFT) -o $(OUT_FILE)
-
-# Rule to create object files
-%.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
-
-# Rule to build libft
 $(LIBFT):
 	make -C $(LIBFT_DIR)
+	mv $(LIBFT_OUTPUT) .
 
-# Clean rule
 clean:
-	rm -f $(OBJ_FILES)
-	make -C $(LIBFT_DIR) clean
+	make clean -C $(LIBFT_DIR)
+	rm -f $(OFILS)
 
-# Fclean rule
 fclean: clean
-	rm -f $(OUT_FILE)
-	make -C $(LIBFT_DIR) fclean
+	make fclean -C $(LIBFT_DIR)
+	rm -f $(NAME)
+	rm -f $(LIBFT)
 
-# Re rule
 re: fclean all
 
-# Phony targets
 .PHONY: all clean fclean re
